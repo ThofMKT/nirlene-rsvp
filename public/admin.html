@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel · Aniversário de Nirlene</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --wine: #A05F2C;
+      --wine-dark: #7D4920;
+      --gold: #A89165;
+      --blush: #D1B791;
+      --cream: #F0DEC9;
+      --text: #3A2E1A;
+      --text-mid: #6B5535;
+      --white: #FFFDF8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'Lato', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--wine-dark);
+      padding: 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--white);
+      font-weight: 400;
+    }
+
+    header span {
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+
+    /* Login */
+    #login-screen {
+      max-width: 380px;
+      margin: 80px auto;
+      background: var(--white);
+      border: 1px solid var(--blush);
+      border-top: 3px solid var(--gold);
+      padding: 40px;
+      text-align: center;
+    }
+
+    #login-screen h2 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 26px;
+      color: var(--wine);
+      margin-bottom: 24px;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1px solid var(--blush);
+      font-family: 'Lato', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      margin-bottom: 12px;
+    }
+
+    .login-input:focus { border-color: var(--wine); }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: var(--wine);
+      color: var(--white);
+      border: none;
+      font-family: 'Lato', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-login:hover { background: var(--wine-dark); }
+
+    .login-error {
+      color: var(--wine);
+      font-size: 13px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    /* Dashboard */
+    #dashboard { display: none; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--blush);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      color: var(--wine);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9B7B6B;
+    }
+
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--wine);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--blush);
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-copy {
+      padding: 9px 18px;
+      background: var(--gold);
+      color: var(--white);
+      border: none;
+      font-family: 'Lato', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-copy:hover { opacity: 0.85; }
+
+    .search-input {
+      padding: 9px 14px;
+      border: 1px solid var(--blush);
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      width: 220px;
+    }
+
+    .search-input:focus { border-color: var(--wine); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      font-size: 14px;
+    }
+
+    thead th {
+      background: var(--wine);
+      color: var(--white);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #F0E8DC;
+      transition: background 0.15s;
+    }
+
+    tbody tr:hover { background: #FBF7F0; }
+
+    tbody td {
+      padding: 12px 16px;
+      color: var(--text);
+    }
+
+    tbody td.time {
+      color: #9B7B6B;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .messages-list { display: flex; flex-direction: column; gap: 16px; }
+
+    .message-card {
+      background: var(--white);
+      border: 1px solid var(--blush);
+      border-left: 3px solid var(--gold);
+      padding: 20px 24px;
+    }
+
+    .message-author {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--wine);
+      margin-bottom: 8px;
+    }
+
+    .message-time {
+      font-size: 11px;
+      color: #9B7B6B;
+      margin-bottom: 10px;
+    }
+
+    .message-body {
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.7;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 32px;
+      color: #9B7B6B;
+      font-style: italic;
+    }
+
+    .section-block { margin-bottom: 48px; }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.7);
+      padding: 7px 14px;
+      font-family: 'Lato', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Painel · Nirlene Rizzo</h1>
+  <div style="display:flex; align-items:center; gap:16px;">
+    <span id="header-info" style="display:none;"></span>
+    <button class="logout-btn" id="logout-btn" style="display:none;" onclick="logout()">Sair</button>
+  </div>
+</header>
+
+<!-- LOGIN -->
+<div class="container">
+  <div id="login-screen">
+    <h2>Área Privada</h2>
+    <input
+      type="password"
+      class="login-input"
+      id="password-input"
+      placeholder="Senha de acesso"
+      autocomplete="current-password"
+    />
+    <button class="btn-login" id="login-btn">Entrar</button>
+    <p class="login-error" id="login-error">Senha incorreta. Tente novamente.</p>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard">
+    <div class="stats-row" id="stats-row"></div>
+
+    <div class="section-block">
+      <h2 class="section-heading">Confirmados</h2>
+      <div class="toolbar">
+        <button class="btn-copy" onclick="copyNames()">Copiar lista de nomes</button>
+        <input type="text" class="search-input" id="search-input" placeholder="Buscar nome…" oninput="filterGuests()" />
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Confirmado em</th>
+          </tr>
+        </thead>
+        <tbody id="guests-table"></tbody>
+      </table>
+    </div>
+
+    <div class="section-block">
+      <h2 class="section-heading">Recados para a Nirlene</h2>
+      <div class="messages-list" id="messages-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let allGuests = [];
+  let adminPassword = '';
+
+  function formatDate(dt) {
+    const d = new Date(dt);
+    return d.toLocaleDateString('pt-BR', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    });
+  }
+
+  async function login() {
+    const pw = document.getElementById('password-input').value;
+    const errEl = document.getElementById('login-error');
+    errEl.style.display = 'none';
+
+    const btn = document.getElementById('login-btn');
+    btn.textContent = 'Entrando…';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('/api/admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pw }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        errEl.style.display = 'block';
+        btn.textContent = 'Entrar';
+        btn.disabled = false;
+        return;
+      }
+
+      adminPassword = pw;
+      renderDashboard(data);
+
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      document.getElementById('logout-btn').style.display = 'inline-block';
+
+    } catch {
+      errEl.textContent = 'Erro de conexão. Tente novamente.';
+      errEl.style.display = 'block';
+      btn.textContent = 'Entrar';
+      btn.disabled = false;
+    }
+  }
+
+  function logout() {
+    adminPassword = '';
+    allGuests = [];
+    document.getElementById('login-screen').style.display = 'block';
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('logout-btn').style.display = 'none';
+    document.getElementById('password-input').value = '';
+  }
+
+  function renderDashboard({ guests, messages }) {
+    allGuests = guests;
+
+    // Stats
+    document.getElementById('stats-row').innerHTML = `
+      <div class="stat-card">
+        <div class="stat-number">${guests.length}</div>
+        <div class="stat-label">Confirmados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">${messages.length}</div>
+        <div class="stat-label">Recados</div>
+      </div>
+    `;
+
+    // Guests table
+    renderGuestsTable(guests);
+
+    // Messages
+    const msgList = document.getElementById('messages-list');
+    if (messages.length === 0) {
+      msgList.innerHTML = '<p class="no-data">Nenhum recado ainda.</p>';
+    } else {
+      msgList.innerHTML = messages.map(m => `
+        <div class="message-card">
+          <div class="message-author">${escHtml(m.guest_name)}</div>
+          <div class="message-time">${formatDate(m.created_at)}</div>
+          <div class="message-body">${escHtml(m.message).replace(/\n/g, '<br/>')}</div>
+        </div>
+      `).join('');
+    }
+  }
+
+  function renderGuestsTable(guests) {
+    const tbody = document.getElementById('guests-table');
+    if (guests.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" class="no-data">Nenhuma confirmação ainda.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = guests.map((g, i) => `
+      <tr>
+        <td style="color:#9B7B6B; font-size:12px;">${i + 1}</td>
+        <td><strong>${escHtml(g.name)}</strong></td>
+        <td class="time">${formatDate(g.confirmed_at)}</td>
+      </tr>
+    `).join('');
+  }
+
+  function filterGuests() {
+    const q = document.getElementById('search-input').value.toLowerCase();
+    const filtered = allGuests.filter(g => g.name.toLowerCase().includes(q));
+    renderGuestsTable(filtered);
+  }
+
+  function copyNames() {
+    const names = allGuests.map((g, i) => `${i + 1}. ${g.name}`).join('\n');
+    const text = `Lista de confirmados — Aniversário de Nirlene Rizzo (${allGuests.length} pessoas)\n\n${names}`;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.btn-copy');
+      const original = btn.textContent;
+      btn.textContent = 'Copiado!';
+      setTimeout(() => { btn.textContent = original; }, 2000);
+    });
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  document.getElementById('login-btn').addEventListener('click', login);
+  document.getElementById('password-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') login();
+  });
+</script>
+
+</body>
+</html>

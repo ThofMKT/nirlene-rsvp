@@ -12,25 +12,31 @@ const pool = new Pool({
 });
 
 async function initDB() {
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS guests (
-      id SERIAL PRIMARY KEY,
-      name TEXT NOT NULL,
-      group_token TEXT,
-      confirmed_at TIMESTAMPTZ DEFAULT NOW()
-    );
-    CREATE TABLE IF NOT EXISTS messages (
-      id SERIAL PRIMARY KEY,
-      guest_name TEXT NOT NULL,
-      message TEXT NOT NULL,
-      created_at TIMESTAMPTZ DEFAULT NOW()
-    );
-  `);
+  const client = await pool.connect();
+  try {
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS guests (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        group_token TEXT,
+        confirmed_at TIMESTAMPTZ DEFAULT NOW()
+      );
+      CREATE TABLE IF NOT EXISTS messages (
+        id SERIAL PRIMARY KEY,
+        guest_name TEXT NOT NULL,
+        message TEXT NOT NULL,
+        created_at TIMESTAMPTZ DEFAULT NOW()
+      );
+    `);
+    console.log('✅ Banco de dados pronto.');
+  } finally {
+    client.release();
+  }
 }
 
 initDB().catch(err => {
-  console.error('Erro ao iniciar banco:', err.message);
-  process.exit(1);
+  console.error('❌ Erro ao conectar no banco:', err.message);
+  // Não encerra o processo — o servidor sobe mesmo assim e loga o erro
 });
 
 app.use(express.json());

@@ -204,6 +204,22 @@
       text-transform: uppercase;
     }
 
+    .btn-delete {
+      padding: 4px 10px;
+      background: transparent;
+      border: 1px solid #ccc;
+      color: #999;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .btn-delete:hover {
+      background: #fee;
+      border-color: #c00;
+      color: #c00;
+    }
+
     tbody tr {
       border-bottom: 1px solid #F0E8DC;
       transition: background 0.15s;
@@ -322,6 +338,7 @@
             <th>#</th>
             <th>Nome</th>
             <th>Confirmado em</th>
+            <th></th>
           </tr>
         </thead>
         <tbody id="guests-table"></tbody>
@@ -432,16 +449,39 @@
   function renderGuestsTable(guests) {
     const tbody = document.getElementById('guests-table');
     if (guests.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="3" class="no-data">Nenhuma confirmação ainda.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="4" class="no-data">Nenhuma confirmação ainda.</td></tr>';
       return;
     }
     tbody.innerHTML = guests.map((g, i) => `
-      <tr>
+      <tr id="row-${g.id}">
         <td style="color:#9B7B6B; font-size:12px;">${i + 1}</td>
         <td><strong>${escHtml(g.name)}</strong></td>
         <td class="time">${formatDate(g.confirmed_at)}</td>
+        <td>
+          <button class="btn-delete" onclick="deleteGuest(${g.id}, '${escHtml(g.name)}')">✕ Apagar</button>
+        </td>
       </tr>
     `).join('');
+  }
+
+  async function deleteGuest(id, name) {
+    if (!confirm(`Apagar "${name}" da lista?`)) return;
+    try {
+      const res = await fetch(`/api/guest/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: adminPassword }),
+      });
+      if (res.ok) {
+        document.getElementById(`row-${id}`).remove();
+        allGuests = allGuests.filter(g => g.id !== id);
+        // Atualiza contagem
+        const countEl = document.querySelector('.stat-number');
+        if (countEl) countEl.textContent = allGuests.length;
+      }
+    } catch {
+      alert('Erro ao apagar. Tente novamente.');
+    }
   }
 
   function filterGuests() {

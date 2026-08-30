@@ -163,6 +163,19 @@ app.post('/api/admin', async (req, res) => {
   }
 });
 
+app.delete('/api/guest/:id', async (req, res) => {
+  const { password } = req.body;
+  if (password !== ADMIN_PASSWORD) {
+    return res.status(401).json({ error: 'Senha incorreta.' });
+  }
+  try {
+    await pool.query('DELETE FROM guests WHERE id = $1', [req.params.id]);
+    res.json({ success: true });
+  } catch {
+    res.status(500).json({ error: 'Erro ao deletar.' });
+  }
+});
+
 app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });

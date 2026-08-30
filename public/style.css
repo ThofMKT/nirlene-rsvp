@@ -67,7 +67,6 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding-bottom: 40px;
 }
 
 .hero-photo-wrap {
@@ -79,7 +78,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center 30%;
   display: block;
 }
 
@@ -100,9 +99,8 @@ body {
   z-index: 2;
   text-align: center;
   color: var(--white);
-  padding: 0 24px 40px;
+  padding: 0 24px;
   max-width: 640px;
-  margin-top: -60px;
 }
 
 .hero-eyebrow {

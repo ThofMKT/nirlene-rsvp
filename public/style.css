@@ -99,8 +99,9 @@ body {
   z-index: 2;
   text-align: center;
   color: var(--white);
-  padding: 80px 24px;
+  padding: 40px 24px 120px;
   max-width: 640px;
+  margin-top: -120px;
 }
 
 .hero-eyebrow {

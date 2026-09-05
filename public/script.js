@@ -34,7 +34,7 @@ loadCount();
 
 
 // Check deadline
-const DEADLINE = new Date('2026-09-03T23:59:59-03:00');
+const DEADLINE = new Date('2026-09-07T23:59:59-03:00');
 if (new Date() > DEADLINE) {
   document.getElementById('rsvp-form-wrapper').style.display = 'none';
   document.getElementById('rsvp-closed').style.display = 'block';

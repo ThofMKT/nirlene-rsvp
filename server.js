@@ -101,9 +101,9 @@ app.post('/api/rsvp', async (req, res) => {
     return res.status(400).json({ error: 'Informe pelo menos um nome.' });
   }
 
-  const deadline = new Date('2026-09-03T23:59:59-03:00');
+  const deadline = new Date('2026-09-07T23:59:59-03:00');
   if (new Date() > deadline) {
-    return res.status(403).json({ error: 'O prazo para confirmações encerrou em 03/09/2026.' });
+    return res.status(403).json({ error: 'O prazo para confirmações encerrou em 07/09/2026.' });
   }
 
   const groupToken = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
